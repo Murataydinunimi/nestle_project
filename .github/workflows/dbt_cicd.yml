@@ -7,8 +7,6 @@ on:
 jobs:
   dbt-test:
     runs-on: ubuntu-latest
-    env:
-      USER: gostudent
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -53,9 +51,6 @@ jobs:
     needs: merge-to-master
     if: success()  # Only run if previous job succeeded
     runs-on: ubuntu-latest
-    env:
-      USER: gostudent
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
