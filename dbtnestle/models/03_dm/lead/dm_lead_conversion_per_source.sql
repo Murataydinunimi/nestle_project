@@ -1,0 +1,1 @@
+SELECt * FROM {{ref('_int_lead_conversion')}}

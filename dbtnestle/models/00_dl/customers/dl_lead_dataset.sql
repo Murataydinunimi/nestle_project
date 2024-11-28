@@ -1,0 +1,1 @@
+{{ get_datalake_model('lead_table', 'raw_lead_dataset') }}

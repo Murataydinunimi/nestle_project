@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: stg_clv
+    description: "A staging model for testing"
+    columns:
+      - name: avg_clv
+        description: "The avg_clv field should not contain negative values"
+        tests:
+          - not_negative

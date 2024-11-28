@@ -1,0 +1,27 @@
+dbtnestle:
+  outputs:
+    dev:
+      account: WNWXVFH-DF16062
+      database: NESTLE_DB
+      password: dbtPassword123
+      role: nestle_transform
+      schema: "RAW"
+      threads: 1
+      type: snowflake
+      user: dbt
+      warehouse: COMPUTE_WH
+    prod:
+      account: WNWXVFH-DF16062
+      database: NESTLE_DB
+      password: dbtPassword123
+      role: nestle_transform
+      schema: "RAW"
+      threads: 1
+      type: snowflake
+      user: dbt
+      warehouse: COMPUTE_WH
+  target: dev
+
+
+    
+

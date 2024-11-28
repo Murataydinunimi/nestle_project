@@ -1,0 +1,76 @@
+name: dbt CI/CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - dev
+    types:
+      - open
+jobs:
+  dbt-test:
+    runs-on: ubuntu-latest
+    env:
+      USER: gostudent
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12.2'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements
+
+      - name: Run dbt debug
+        run: dbt debug --profiles-dir ./dbtnestle --project-dir ./dbtnestle
+
+      - name: Run dbt models
+        run: dbt run --profiles-dir ./dbtnestle --project-dir ./dbtnestle --target dev
+
+      - name: Run dbt tests
+        run: dbt test --profiles-dir ./dbtnestle --project-dir ./dbtnestle --target dev
+
+  merge-to-master:
+    needs: dbt-test
+    if: success()  # Only run if previous job succeeded
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Merge dev to master
+        run: |
+          git config --local user.email "barlaskiziltan@gmail.com"
+          git config --local user.name "murat"
+          git fetch origin
+          git checkout master
+          git merge origin/dev --allow-unrelated-histories --strategy-option theirs || true
+          git push origin master
+
+  run-dbt-prod:
+    needs: merge-to-master
+    if: success()  # Only run if previous job succeeded
+    runs-on: ubuntu-latest
+    env:
+      USER: gostudent
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12.2'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements
+
+      - name: Run dbt in production schema
+        run: dbt build --profiles-dir ./dbtnestle --project-dir ./dbtnestle --target prod

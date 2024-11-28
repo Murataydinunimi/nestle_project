@@ -1,0 +1,1 @@
+{{ get_datalake_model('clv_table', 'raw_clv_dataset') }}

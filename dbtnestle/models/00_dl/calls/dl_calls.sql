@@ -1,0 +1,1 @@
+{{ get_datalake_model('calls_table', 'raw_call_dataset') }}
