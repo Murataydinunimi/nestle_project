@@ -8,6 +8,7 @@ on:
       - open
       - synchronize
       - reopened
+      - closed
 jobs:
   dbt-test:
     runs-on: ubuntu-latest
