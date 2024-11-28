@@ -32,20 +32,20 @@ jobs:
 
 
   merge-feature-into-dev:
-  needs: dbt-test
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout dev branch
-      uses: actions/checkout@v2
+    needs: dbt-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
 
-    - name: Merge feature branch into dev
-      run: |
-        git config --local user.email "barlaskiziltan@gmail.com"
-        git config --local user.name "murat"
-        git fetch origin
-        git checkout dev
-        git merge origin/${{ github.head_ref }} --strategy-option theirs
-        git push origin dev
+      - name: Merge feature branch into dev
+        run: |
+          git config --local user.email "barlaskiziltan@gmail.com"
+          git config --local user.name "murat"
+          git fetch origin
+          git checkout dev
+          git merge origin/${{ github.head_ref }} --strategy-option theirs
+          git push origin dev
 
   merge-to-master:
     needs: merge-feature-into-dev
