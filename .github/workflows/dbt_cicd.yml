@@ -6,6 +6,9 @@ on:
       - dev
     types:
       - open
+      - synchronize
+      - reopened
+      - closed
 jobs:
   dbt-test:
     runs-on: ubuntu-latest
