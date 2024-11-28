@@ -1,4 +1,4 @@
-{% test not_negative(model, column_name) %}
+{% test check_negative_values(model, column_name) %}
 
     SELECT *
     FROM {{ model }}
