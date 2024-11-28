@@ -30,8 +30,25 @@ jobs:
       - name: Run dbt tests
         run: dbt test --profiles-dir ./dbtnestle --project-dir ./dbtnestle --target dev
 
-  merge-to-master:
+
+  merge-feature-into-dev:
     needs: dbt-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
+
+      - name: Merge feature branch into dev
+        run: |
+          git config --local user.email "barlaskiziltan@gmail.com"
+          git config --local user.name "murat"
+          git fetch origin
+          git checkout dev
+          git merge origin/${{ github.head_ref }} --strategy-option theirs
+          git push origin dev
+
+  merge-to-master:
+    needs: merge-feature-into-dev
     if: success()  # Only run if previous job succeeded
     runs-on: ubuntu-latest
     steps:
