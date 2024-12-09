@@ -61,6 +61,8 @@ models:
     03_dm:
 
       +materialized: "table"
+      +post_hook:
+        - "GRANT SELECT ON {{this}} TO ROLE REPORTER"
       +schema: "data_mart"
       +tags: 
         - "data_mart"

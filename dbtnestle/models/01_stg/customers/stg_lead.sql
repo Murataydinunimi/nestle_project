@@ -10,4 +10,4 @@ WITH stg_lead AS (
 FROM {{ ref('dl_lead_dataset') }})
 
 SELECT * FROM stg_lead
-WHERE TEST_FLAG = 'TRUE'
+--WHERE TEST_FLAG = 'TRUE'
